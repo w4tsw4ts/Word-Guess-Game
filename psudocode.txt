@@ -1,0 +1,15 @@
+Draw screen.
+Pick word.
+Get key
+	Is key already been pressed?
+		Yes - Get another key.
+	Is key a valid char?
+		No - Get another key.
+		Yes - Is it a match?
+			Yes - Reveal letter, 
+				- Did you guess the word? Yes - You WIN!
+							  No - Get another key.
+			No - Reduce missed counter 
+				Does counter = 0? Yes - Game over!
+						  No - get another key.			
+	
