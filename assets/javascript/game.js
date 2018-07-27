@@ -9,42 +9,46 @@ var wordList = ["Peugeot", "Audi", "Mercedes", "Porsche",
 
 var validKeys = "abcdefghijklmnopqrstuvwxyz"                
 
-var lettersGussed =[];
-var match;
+var lettersGussed = "";
+var lettersGuessedRight =0;
 var numberOfGusses = 7;
-var x=0;
+var numberOfMisses =0;
 var guessedWord=[];
-var p;
-var s='';
+var displayWordStatus = "";
+var x=0;
+
 
 // Pick a word from the list
-var computerPickWord = wordList[Math.floor(Math.random() * wordList.length)].toLowerCase(); 
-for (i = 0; i < length.computerPickWord; ++i) {
-    guessedWord.push("_");
-}
+var Word = wordList[Math.floor(Math.random() * wordList.length)].toLowerCase(); 
 
-console.log(computerPickWord);
+// Debug code to testing
+console.log(Word);
 
 // Get key from users
 document.onkeyup = function(event) {
     var userLetter = event.key.toLowerCase();
-    /* console.log("user picked: " + userLetter); */
 
     // Is KEY a valid KEY [a-z]
-    if (validKeys.indexOf(userLetter) > -1) {
+    if (validKeys.indexOf(userLetter) !== -1) {
         
         // Has the KEY been pressed before?
-        if (lettersGussed.indexOf(userLetter) > -1) {
+        if (lettersGussed.indexOf(userLetter) !== -1) {
             // Get another KEY from user.
             console.log("ALREADY GUESSED TRY AGAIN!!!")
-        } else if (p = computerPickWord.indexOf(userLetter) > -1) { // Does this KEY math one of the letters in the WORD?
-            guessedWord[p] = userLetter;
-            for (i = 0; i < length.guessedWord; i++) {
-                s = s + guessedWord[i];
+        } else if (Word.indexOf(userLetter) !== -1) { // Does this KEY math one of the letters in the WORD?
+            LettersGussedRight =0;
+            for (var j = 0; j < Word.length; j++){
+                if (userLetter.indexOf(Word[j]) !== -1){
+                    displayWordStatus = displayWordStatus + Word[j] + " ";
+                    LettersGussedRight++;
+                } else {
+                    displayWordStatus = displayWordStatus + "_";
+                }
             }
-            console.log("MATCH: " + guessedWord); // Reveal letter(s) on the screen
-            lettersGussed += userLetter;
-            if (lettersGussed.includes(computerPickWord) > true) {
+            console.log(LettersGussedRight);
+            console.log(displayWordStatus);
+            console.log("MATCH: " + userLetter); // Reveal letter(s) on the screen Allan helped
+            if (lettersGussed.includes(Word) > true) {
                 console.log("YOU WIN!");
         }
             } else {
