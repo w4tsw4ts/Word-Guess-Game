@@ -10,54 +10,66 @@ var wordList = ["Peugeot", "Audi", "Mercedes", "Porsche",
 var validKeys = "abcdefghijklmnopqrstuvwxyz"                
 
 var lettersGussed = "";
-var lettersGuessedRight =0;
+var lettersGuessedRight = 0;
+var letterPosition = 0;
 var numberOfGusses = 7;
-var numberOfMisses =0;
+var numberOfMisses = 0;
+var numLetersinWord = "";
 var guessedWord=[];
 var displayWordStatus = "";
-var x=0;
+var LettersGussedRight = 0;
+var wins = 0;
+var losses = 0;
+var x = 0;
 
+function resetGame() {
+    numberOfGusses = 0;
+    lettersGussed = [];
+    letterPossition = 0;
+    lettersGuessedRight = 0;
 
-// Pick a word from the list
-var Word = wordList[Math.floor(Math.random() * wordList.length)].toLowerCase(); 
+    Word = wordList[Math.floor(Math.random() * wordList.length)].toLowerCase();
+    console.log("Word: " + Word);
 
-// Debug code to testing
-console.log(Word);
+    displayWordStatus = '';
+    numLetersinWord = Word.length;
+    for ( i = 0; i < numLetersinWord; i++) {
+        displayWordStatus = displayWordStatus + "_ ";
+    }
+}
+
+resetGame();
 
 // Get key from users
 document.onkeyup = function(event) {
-    var userLetter = event.key.toLowerCase();
+    var letter = event.key.toLowerCase();
 
     // Is KEY a valid KEY [a-z]
-    if (validKeys.indexOf(userLetter) !== -1) {
+    if (validKeys.indexOf(letter) !== -1) {
         
         // Has the KEY been pressed before?
-        if (lettersGussed.indexOf(userLetter) !== -1) {
+        if (lettersGussed.indexOf(letter) !== -1) {
             // Get another KEY from user.
-            console.log("ALREADY GUESSED TRY AGAIN!!!")
-        } else if (Word.indexOf(userLetter) !== -1) { // Does this KEY math one of the letters in the WORD?
-            LettersGussedRight =0;
+            console.log(letter + " has already been gussed.  Try again.")
+        } else if (Word.indexOf(letter) !== -1) { // Does this KEY match one of the letters in the WORD?
             for (var j = 0; j < Word.length; j++){
-                if (userLetter.indexOf(Word[j]) !== -1){
+                if (letter.indexOf(Word[j]) !== -1){
                     displayWordStatus = displayWordStatus + Word[j] + " ";
                     LettersGussedRight++;
                 } else {
                     displayWordStatus = displayWordStatus + "_";
                 }
             }
-            console.log(LettersGussedRight);
-            console.log(displayWordStatus);
-            console.log("MATCH: " + userLetter); // Reveal letter(s) on the screen Allan helped
             if (lettersGussed.includes(Word) > true) {
                 console.log("YOU WIN!");
         }
             } else {
-                lettersGussed += userLetter;
+                lettersGussed += letter;
                 x++;
                 console.log("BAD Guess: " + x);
             }
     } else {
-        console.log("Invalid KEY")
+        console.log("Invalid Letter. Try again.")
     }
     // Have I run out of guesses?
     if (x === numberOfGusses) {
