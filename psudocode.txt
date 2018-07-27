@@ -1,15 +1,15 @@
 Draw screen.
-Pick word.
-Get key
-	Is key already been pressed?
-		Yes - Get another key.
-	Is key a valid char?
-		No - Get another key.
-		Yes - Is it a match?
-			Yes - Reveal letter, 
-				- Did you guess the word? Yes - You WIN!
-							  No - Get another key.
-			No - Reduce missed counter 
-				Does counter = 0? Yes - Game over!
-						  No - get another key.			
-	
+Pick a WORD.
+Get KEY from user
+	Is KEY a valid KEY [a-z]
+		Yes - Has the KEY been pressed before? 
+			Yes - Get another KEY from user.
+			No  - Does this KEY match one of the letters in the WORD?
+				Yes - 1) Reveal letter
+					  2) Store guessed letter so it is not used again.
+					  3) Do NOT increate guess counter
+					  4) Get another KEY from user.
+				No  - 1) Store guessed letter so it is not used again.
+					  2) Increase guess counter.
+					  3) Get another KEY from user.
+		No  -
