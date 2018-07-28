@@ -98,11 +98,21 @@ document.onkeyup = function(event) {
         if (lettersGuessedRight === Word.length) {
             win++
             console.log("You WIN!!! The word was " + Word);
+            // Update Div
+            var youWinDiv = document.getElementById("gameResult");
+            youWinDiv.textContent = "You Win!!!! The word was";
+            var youWinWord = document.getElementById("gameResultWord");
+            youWinWord.textContent = "'" + Word + "'";
             resetGame();
         }
         if (numberOfGuesses === numberOfMisses) {
             lose++;
             console.log("Sorry you lost. The word was " + Word);
+            // Update Div
+            var youWinDiv = document.getElementById("gameResult");
+            youWinDiv.textContent = "You lost sorry. The word was";
+            var youWinWord = document.getElementById("gameResultWord");
+            youWinWord.textContent = "'" + Word + "'";
             resetGame();
         }
         
