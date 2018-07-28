@@ -13,7 +13,7 @@ var lettersGuessed = "";
 var lettersGuessedRight = 0;
 var letterPosition = 0;
 var numberOfGuesses = 0;
-var numberOfMisses = 7;
+var numberOfMisses = 9;
 var numLetersinWord = "";
 var guessedWord=[];
 var displayWordStatus = "";
@@ -36,6 +36,19 @@ function resetGame() {
         displayWordStatus = displayWordStatus + "_ ";
     }
     console.log(displayWordStatus);
+}
+
+function stats() {
+    var guesRemainDiv = document.getElementById("guessesRemaining");
+        guesRemainDiv.textContent = numberOfMisses - numberOfGuesses;
+    var disWordDiv = document.getElementById("displayword");
+        disWordDiv.textContent = displayWordStatus;
+    var disLetGusDiv = document.getElementById("lettersGuessed");
+        disLetGusDiv.textContent = lettersGuessed;
+    var disWinDiv = document.getElementById("win");
+        disWinDiv.textContent = win;
+    var disLosDiv = document.getElementById("lost");
+        disLosDiv.textContent = lose;
 }
 
 resetGame();
@@ -80,7 +93,7 @@ document.onkeyup = function(event) {
             console.log("Guesses " + numberOfGuesses + " Misses " + numberOfMisses);
             console.log("Letters Guessed " + lettersGuessed);
     
-            /* setStats(); */
+            stats();
         }
         if (lettersGuessedRight === Word.length) {
             win++
@@ -96,4 +109,5 @@ document.onkeyup = function(event) {
     } else {
         console.log("Invalid Letter. Try again.")
     }
+    stats();
 }
