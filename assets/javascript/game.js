@@ -9,22 +9,21 @@ var wordList = ["Peugeot", "Audi", "Mercedes", "Porsche",
 
 var validKeys = "abcdefghijklmnopqrstuvwxyz"                
 
-var lettersGussed = "";
+var lettersGuessed = "";
 var lettersGuessedRight = 0;
 var letterPosition = 0;
-var numberOfGusses = 7;
-var numberOfMisses = 0;
+var numberOfGuesses = 0;
+var numberOfMisses = 7;
 var numLetersinWord = "";
 var guessedWord=[];
 var displayWordStatus = "";
-var LettersGussedRight = 0;
-var wins = 0;
-var losses = 0;
+var win = 0;
+var lose = 0;
 var x = 0;
 
 function resetGame() {
-    numberOfGusses = 0;
-    lettersGussed = [];
+    numberOfGuesses = 0;
+    lettersGuessed = [];
     letterPossition = 0;
     lettersGuessedRight = 0;
 
@@ -36,6 +35,7 @@ function resetGame() {
     for ( i = 0; i < numLetersinWord; i++) {
         displayWordStatus = displayWordStatus + "_ ";
     }
+    console.log(displayWordStatus);
 }
 
 resetGame();
@@ -48,31 +48,52 @@ document.onkeyup = function(event) {
     if (validKeys.indexOf(letter) !== -1) {
         
         // Has the KEY been pressed before?
-        if (lettersGussed.indexOf(letter) !== -1) {
+        if (lettersGuessed.indexOf(letter) !== -1) {
             // Get another KEY from user.
             console.log(letter + " has already been gussed.  Try again.")
-        } else if (Word.indexOf(letter) !== -1) { // Does this KEY match one of the letters in the WORD?
-            for (var j = 0; j < Word.length; j++){
-                if (letter.indexOf(Word[j]) !== -1){
-                    displayWordStatus = displayWordStatus + Word[j] + " ";
-                    LettersGussedRight++;
-                } else {
-                    displayWordStatus = displayWordStatus + "_";
+        } else {  // Letter is valid and has not been used before.
+            lettersGuessed.push(letter);
+            console.log(letter + " has not been guessed yet.");
+
+            // Is the letter in the word? If so get the postion of the letter in the word.
+            letterPosition = Word.indexOf(letter);
+            if (letterPosition === -1) {
+                numberOfGuesses++;
+                console.log("This letter " + letter + " is NOT in word");
+            } else {
+                console.log("this letter " + letter + " is in the word");
+                //Find where in the word the letter go.
+                console.log("The letter is located in the array " + letterPosition);
+                displayWordStatus = "";
+                lettersGuessedRight = 0;
+                for (var j = 0; j < Word.length; j++) {
+                    if (lettersGuessed.indexOf(Word[j]) !== -1) {
+                        displayWordStatus = displayWordStatus + Word[j] + " ";
+                        lettersGuessedRight++;
+                    } else {
+                        displayWordStatus = displayWordStatus + "_ ";
+                    }
                 }
             }
-            if (lettersGussed.includes(Word) > true) {
-                console.log("YOU WIN!");
+            console.log("Display status " + displayWordStatus);
+            console.log("Guessed right " + lettersGuessedRight + " Word len " + Word.length);
+            console.log("Guesses " + numberOfGuesses + " Misses " + numberOfMisses);
+            console.log("Letters Guessed " + lettersGuessed);
+    
+            /* setStats(); */
         }
-            } else {
-                lettersGussed += letter;
-                x++;
-                console.log("BAD Guess: " + x);
-            }
+        if (lettersGuessedRight === Word.length) {
+            win++
+            console.log("You WIN!!! The word was " + Word);
+            resetGame();
+        }
+        if (numberOfGuesses === numberOfMisses) {
+            lose++;
+            console.log("Sorry you lost. The word was " + Word);
+            resetGame();
+        }
+        
     } else {
         console.log("Invalid Letter. Try again.")
-    }
-    // Have I run out of guesses?
-    if (x === numberOfGusses) {
-        console.log("Game Over number of guess: " + numberOfGusses);
     }
 }
